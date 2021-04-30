@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Reloj</title>
+    <style>
+        div{
+            display: inline-flex;
+            margin-left: 20px;
+        }
+        .hora #ampm{
+            margin-left: 8px;
+            font-size: 50px;
+            color:  #525660;
+            text-transform: lowercase;
+        }
+        .hora p{
+            margin: 0;
+            font-size: 80px;
+            margin-top: 50px;
+        }
+        .fecha p{
+            margin: 0;
+            margin-right: 15px;
+            font-size: 50px;
+            font-style: italic;
+            color: #525660;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="hora">
+        <p id="Horas"></p>
+        <p>:</p>
+        <p id="Minutos"></p>
+        <p>:</p>
+        <p id="Segundos"></p>
+        <p id="ampm"></p>
+    </div>
+    <br>
+    <div class="fecha">
+        <p id="diase"></p>
+        <p id="dia"></p>
+        <p>de</p>
+        <p id="mes"></p>
+        <p>de</p>
+        <p id="year"></p>
+    </div>
+    <script>
+        (function actualizar(){
+            //obtner datos de tiempo
+            var fecha = new Date(),
+                ampm,
+                horas = fecha.getHours(),
+                minutos = fecha.getMinutes(),
+                segundos = fecha.getSeconds(),
+                diasemana = fecha.getDay(), //comeinza con cero como arreglo
+                dias = fecha.getDate(),
+                mes = fecha.getMonth(), //comienza con cero
+                anio = fecha.getFullYear();
+
+            var elementohoras = document.getElementById('Horas'),
+                elementominutos = document.getElementById('Minutos'),
+                elementosegundos = document.getElementById('Segundos'),
+                elementoAmPm = document.getElementById('ampm'),
+                elementodiasemana = document.getElementById('diase'),
+                elementodia = document.getElementById('dia'),
+                elementomes = document.getElementById('mes'),
+                elementoanio = document.getElementById('year');
+
+            //arreglo de dia 
+            var arraysemana = ["Domingo","Lunes","Martes","Miercoles","Jueves","viernes","Sabado"];  
+            var arraymeses =["Enero","Febrero","Marzo","Abril","Mayo"];
+
+            //asiganr datos defecha
+            elementodiasemana.textContent = arraysemana[diasemana];
+            elementodia.textContent = dias; 
+            elementomes.textContent = arraymeses[mes];
+            elementoanio.textContent = anio;
+
+            //transformar el reloj de 24 a 12 horas
+            if (horas >= 12){
+                horas = horas - 12;
+                ampm = "PM";
+            }else
+            {ampm = "AM";};
+
+            //agregar loos ceros
+            if (minutos < 10){
+                minutos = "0" + minutos;
+            }
+
+            if (segundos < 10){
+                segundos = "0" + segundos;
+            }
+
+            if (horas < 10){
+                horas = "0" + horas;
+            }
+
+            //validar la hora 00
+            if (horas == 0){
+                horas = 12;
+            }
+
+            elementohoras.textContent = horas;
+            elementominutos.textContent = minutos;
+            elementosegundos.textContent = segundos;
+            elementoAmPm.textContent = ampm;
+
+            setInterval(actualizar,1000);
+
+        }() )
+        
+    </script>
+</body>
+</html>
